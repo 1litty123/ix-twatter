@@ -1,55 +1,55 @@
-@import url("https://fonts.googleapis.com/css?family=Lato:300");
-
-.App {
-  text-align: center;
-}
-
-.feed-container {
+.tweeter-handle-container {
+  margin-top: 50px;
   padding-right: 15px;
   font-family: Lato;
   width: 400px;
   border: none;
   margin-left: 330px;
 }
-.feed-author {
+.tweet-author {
   font-family: Lato;
   font-size: 20px;
   color: #42b8ff;
   padding-right: 5px;
   font-weight: bold;
 }
-.feed-email {
+.tweet-email {
   color: #000;
   padding-top: 3px;
   padding-left: 5px;
   font: italic 12px Lato;
   opacity: 0.8;
 }
-.feed-tweet {
+.user-tweet {
   padding: 5px;
   text-align: left;
-  margin-bottom: 15px;
+  margin-bottom: 25px;
   width: 400px;
   border-radius: 10px;
   background-color: #fafafa;
 }
-.feed-tweet a {
+.user-tweet a {
   color: #42b8ff;
   text-decoration: none;
 }
-.feed-tweet a:hover {
+.user-tweet a:hover {
   text-decoration: underline;
 }
-
-.App-intro {
-  font-size: large;
+.not-authorized {
+  font-family: Lato;
+  margin-top: 150px;
+  margin-left: 350px;
+  padding-top: 40px;
+  border: none;
+  width: 398px;
+  height: 100px;
+  text-align: left;
+  font-size: 20px;
+  outline: none;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.not-authorized a {
+  color: #000;
+  font-weight: bold;
+  text-decoration: none;
 }

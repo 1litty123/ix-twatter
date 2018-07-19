@@ -1,0 +1,52 @@
+.tweeter-handle-container {
+  margin-top: 50px;
+  padding-right: 15px;
+  font-family: Lato;
+  width: 400px;
+  border: none;
+  margin-left: 330px;
+}
+
+.following a {
+  color: #42b8ff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.following a:hover {
+  text-decoration: underline;
+}
+
+.tweet-author {
+  font-family: Lato;
+  font-size: 20px;
+  color: #42b8ff;
+  padding-right: 5px;
+  font-weight: bold;
+}
+.tweet-email {
+  color: #000;
+  padding-top: 3px;
+  padding-left: 0px;
+  font: italic 12px Lato;
+  opacity: 0.8;
+}
+.user-tweet {
+  padding: 5px;
+  text-align: left;
+  margin-bottom: 10px;
+  width: 400px;
+  border-radius: 10px;
+  background-color: #fafafa;
+}
+.tweeter-profile {
+  text-align: left;
+  padding: 5px;
+  margin-bottom: 10px;
+  width: 400px;
+  border-radius: 10px;
+  background-color: #fafafa;
+}
+.following {
+  font-size: 12px;
+}

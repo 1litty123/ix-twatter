@@ -1,20 +1,18 @@
-import * as React from 'react';
-import logo from './logo.svg';
+import * as React from "react"
+import Feed from "../feed/feed"
+import Navigation from "../navigation/navigation.jsx"
 
 class HomePage extends React.Component {
   public render() {
     return (
       <div>
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.tsx</code> and save to reload.
-        </p>
+        <Navigation />
+        <div className="feed">
+          <Feed />
+        </div>
       </div>
-    );
+    )
   }
 }
 
-export default HomePage;
+export default HomePage

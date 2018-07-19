@@ -417,6 +417,7 @@ type User implements Node {
   name: String!
   picture: String
   tweets(where: TweetWhereInput, orderBy: TweetOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tweet!]
+  followers(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
 }
 
 """A connection to a list of items."""
@@ -435,6 +436,12 @@ input UserCreateInput {
   name: String!
   picture: String
   tweets: TweetCreateManyWithoutAuthorInput
+  followers: UserCreateManyInput
+}
+
+input UserCreateManyInput {
+  create: [UserCreateInput!]
+  connect: [UserWhereUniqueInput!]
 }
 
 input UserCreateOneWithoutTweetsInput {
@@ -447,6 +454,7 @@ input UserCreateWithoutTweetsInput {
   password: String!
   name: String!
   picture: String
+  followers: UserCreateManyInput
 }
 
 """An edge in a connection."""
@@ -522,12 +530,31 @@ input UserSubscriptionWhereInput {
   node: UserWhereInput
 }
 
+input UserUpdateDataInput {
+  email: String
+  password: String
+  name: String
+  picture: String
+  tweets: TweetUpdateManyWithoutAuthorInput
+  followers: UserUpdateManyInput
+}
+
 input UserUpdateInput {
   email: String
   password: String
   name: String
   picture: String
   tweets: TweetUpdateManyWithoutAuthorInput
+  followers: UserUpdateManyInput
+}
+
+input UserUpdateManyInput {
+  create: [UserCreateInput!]
+  connect: [UserWhereUniqueInput!]
+  disconnect: [UserWhereUniqueInput!]
+  delete: [UserWhereUniqueInput!]
+  update: [UserUpdateWithWhereUniqueNestedInput!]
+  upsert: [UserUpsertWithWhereUniqueNestedInput!]
 }
 
 input UserUpdateOneWithoutTweetsInput {
@@ -543,11 +570,23 @@ input UserUpdateWithoutTweetsDataInput {
   password: String
   name: String
   picture: String
+  followers: UserUpdateManyInput
+}
+
+input UserUpdateWithWhereUniqueNestedInput {
+  where: UserWhereUniqueInput!
+  data: UserUpdateDataInput!
 }
 
 input UserUpsertWithoutTweetsInput {
   update: UserUpdateWithoutTweetsDataInput!
   create: UserCreateWithoutTweetsInput!
+}
+
+input UserUpsertWithWhereUniqueNestedInput {
+  where: UserWhereUniqueInput!
+  update: UserUpdateDataInput!
+  create: UserCreateInput!
 }
 
 input UserWhereInput {
@@ -762,6 +801,12 @@ input UserWhereInput {
   tweets_every: TweetWhereInput
   tweets_some: TweetWhereInput
   tweets_none: TweetWhereInput
+  followers_every: UserWhereInput
+  followers_some: UserWhereInput
+  followers_none: UserWhereInput
+  _MagicalBackRelation_UserToUser_every: UserWhereInput
+  _MagicalBackRelation_UserToUser_some: UserWhereInput
+  _MagicalBackRelation_UserToUser_none: UserWhereInput
 }
 
 input UserWhereUniqueInput {
@@ -804,9 +849,13 @@ export type MutationType =   'CREATED' |
   'UPDATED' |
   'DELETED'
 
-export interface UserCreateOneWithoutTweetsInput {
-  create?: UserCreateWithoutTweetsInput
-  connect?: UserWhereUniqueInput
+export interface UserCreateInput {
+  email: String
+  password: String
+  name: String
+  picture?: String
+  tweets?: TweetCreateManyWithoutAuthorInput
+  followers?: UserCreateManyInput
 }
 
 export interface TweetWhereInput {
@@ -860,9 +909,8 @@ export interface TweetWhereInput {
   author?: UserWhereInput
 }
 
-export interface TweetCreateManyWithoutAuthorInput {
-  create?: TweetCreateWithoutAuthorInput[] | TweetCreateWithoutAuthorInput
-  connect?: TweetWhereUniqueInput[] | TweetWhereUniqueInput
+export interface TweetCreateWithoutAuthorInput {
+  text: String
 }
 
 export interface UserWhereInput {
@@ -942,23 +990,48 @@ export interface UserWhereInput {
   tweets_every?: TweetWhereInput
   tweets_some?: TweetWhereInput
   tweets_none?: TweetWhereInput
+  followers_every?: UserWhereInput
+  followers_some?: UserWhereInput
+  followers_none?: UserWhereInput
+  _MagicalBackRelation_UserToUser_every?: UserWhereInput
+  _MagicalBackRelation_UserToUser_some?: UserWhereInput
+  _MagicalBackRelation_UserToUser_none?: UserWhereInput
 }
 
-export interface UserUpdateInput {
+export interface TweetUpdateManyWithoutAuthorInput {
+  create?: TweetCreateWithoutAuthorInput[] | TweetCreateWithoutAuthorInput
+  connect?: TweetWhereUniqueInput[] | TweetWhereUniqueInput
+  disconnect?: TweetWhereUniqueInput[] | TweetWhereUniqueInput
+  delete?: TweetWhereUniqueInput[] | TweetWhereUniqueInput
+  update?: TweetUpdateWithWhereUniqueWithoutAuthorInput[] | TweetUpdateWithWhereUniqueWithoutAuthorInput
+  upsert?: TweetUpsertWithWhereUniqueWithoutAuthorInput[] | TweetUpsertWithWhereUniqueWithoutAuthorInput
+}
+
+export interface UserUpdateWithoutTweetsDataInput {
+  email?: String
+  password?: String
+  name?: String
+  picture?: String
+  followers?: UserUpdateManyInput
+}
+
+export interface UserUpdateDataInput {
   email?: String
   password?: String
   name?: String
   picture?: String
   tweets?: TweetUpdateManyWithoutAuthorInput
+  followers?: UserUpdateManyInput
 }
 
-export interface TweetCreateWithoutAuthorInput {
+export interface TweetUpdateInput {
+  text?: String
+  author?: UserUpdateOneWithoutTweetsInput
+}
+
+export interface TweetCreateInput {
   text: String
-}
-
-export interface UserUpsertWithoutTweetsInput {
-  update: UserUpdateWithoutTweetsDataInput
-  create: UserCreateWithoutTweetsInput
+  author: UserCreateOneWithoutTweetsInput
 }
 
 export interface TweetSubscriptionWhereInput {
@@ -972,16 +1045,52 @@ export interface TweetSubscriptionWhereInput {
   node?: TweetWhereInput
 }
 
-export interface UserUpdateWithoutTweetsDataInput {
-  email?: String
-  password?: String
-  name?: String
-  picture?: String
+export interface UserCreateOneWithoutTweetsInput {
+  create?: UserCreateWithoutTweetsInput
+  connect?: UserWhereUniqueInput
 }
 
 export interface UserWhereUniqueInput {
   id?: ID_Input
   email?: String
+}
+
+export interface UserCreateWithoutTweetsInput {
+  email: String
+  password: String
+  name: String
+  picture?: String
+  followers?: UserCreateManyInput
+}
+
+export interface UserUpsertWithoutTweetsInput {
+  update: UserUpdateWithoutTweetsDataInput
+  create: UserCreateWithoutTweetsInput
+}
+
+export interface UserCreateManyInput {
+  create?: UserCreateInput[] | UserCreateInput
+  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput
+}
+
+export interface TweetUpsertWithWhereUniqueWithoutAuthorInput {
+  where: TweetWhereUniqueInput
+  update: TweetUpdateWithoutAuthorDataInput
+  create: TweetCreateWithoutAuthorInput
+}
+
+export interface UserUpdateWithWhereUniqueNestedInput {
+  where: UserWhereUniqueInput
+  data: UserUpdateDataInput
+}
+
+export interface TweetUpdateWithWhereUniqueWithoutAuthorInput {
+  where: TweetWhereUniqueInput
+  data: TweetUpdateWithoutAuthorDataInput
+}
+
+export interface TweetWhereUniqueInput {
+  id?: ID_Input
 }
 
 export interface UserUpdateOneWithoutTweetsInput {
@@ -992,48 +1101,27 @@ export interface UserUpdateOneWithoutTweetsInput {
   upsert?: UserUpsertWithoutTweetsInput
 }
 
-export interface TweetUpdateWithoutAuthorDataInput {
-  text?: String
+export interface UserUpdateManyInput {
+  create?: UserCreateInput[] | UserCreateInput
+  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput
+  disconnect?: UserWhereUniqueInput[] | UserWhereUniqueInput
+  delete?: UserWhereUniqueInput[] | UserWhereUniqueInput
+  update?: UserUpdateWithWhereUniqueNestedInput[] | UserUpdateWithWhereUniqueNestedInput
+  upsert?: UserUpsertWithWhereUniqueNestedInput[] | UserUpsertWithWhereUniqueNestedInput
 }
 
-export interface UserCreateInput {
-  email: String
-  password: String
-  name: String
+export interface TweetCreateManyWithoutAuthorInput {
+  create?: TweetCreateWithoutAuthorInput[] | TweetCreateWithoutAuthorInput
+  connect?: TweetWhereUniqueInput[] | TweetWhereUniqueInput
+}
+
+export interface UserUpdateInput {
+  email?: String
+  password?: String
+  name?: String
   picture?: String
-  tweets?: TweetCreateManyWithoutAuthorInput
-}
-
-export interface UserCreateWithoutTweetsInput {
-  email: String
-  password: String
-  name: String
-  picture?: String
-}
-
-export interface TweetUpdateInput {
-  text?: String
-  author?: UserUpdateOneWithoutTweetsInput
-}
-
-export interface TweetCreateInput {
-  text: String
-  author: UserCreateOneWithoutTweetsInput
-}
-
-export interface TweetUpdateWithWhereUniqueWithoutAuthorInput {
-  where: TweetWhereUniqueInput
-  data: TweetUpdateWithoutAuthorDataInput
-}
-
-export interface TweetUpsertWithWhereUniqueWithoutAuthorInput {
-  where: TweetWhereUniqueInput
-  update: TweetUpdateWithoutAuthorDataInput
-  create: TweetCreateWithoutAuthorInput
-}
-
-export interface TweetWhereUniqueInput {
-  id?: ID_Input
+  tweets?: TweetUpdateManyWithoutAuthorInput
+  followers?: UserUpdateManyInput
 }
 
 export interface UserSubscriptionWhereInput {
@@ -1047,13 +1135,14 @@ export interface UserSubscriptionWhereInput {
   node?: UserWhereInput
 }
 
-export interface TweetUpdateManyWithoutAuthorInput {
-  create?: TweetCreateWithoutAuthorInput[] | TweetCreateWithoutAuthorInput
-  connect?: TweetWhereUniqueInput[] | TweetWhereUniqueInput
-  disconnect?: TweetWhereUniqueInput[] | TweetWhereUniqueInput
-  delete?: TweetWhereUniqueInput[] | TweetWhereUniqueInput
-  update?: TweetUpdateWithWhereUniqueWithoutAuthorInput[] | TweetUpdateWithWhereUniqueWithoutAuthorInput
-  upsert?: TweetUpsertWithWhereUniqueWithoutAuthorInput[] | TweetUpsertWithWhereUniqueWithoutAuthorInput
+export interface TweetUpdateWithoutAuthorDataInput {
+  text?: String
+}
+
+export interface UserUpsertWithWhereUniqueNestedInput {
+  where: UserWhereUniqueInput
+  update: UserUpdateDataInput
+  create: UserCreateInput
 }
 
 /*
@@ -1132,6 +1221,7 @@ export interface User extends Node {
   name: String
   picture?: String
   tweets?: Tweet[]
+  followers?: User[]
 }
 
 /*

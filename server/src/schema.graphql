@@ -2,11 +2,19 @@
 
 type Query {
   me: User
+  feed(orderBy: String): [Tweet!]!
+  tweetById(id: ID!): Tweet!
+  userById(id: ID!): User!
+  users(where: UserWhereInput): [User!]!
 }
 
 type Mutation {
   signup(email: String!, password: String!, name: String!): AuthPayload!
   login(email: String!, password: String!): AuthPayload!
+  createTweet(email: String, text: String!): Tweet!
+  follow(email: String!): User!
+  unfollow(email: String!): User!
+  deleteUser(id: String!): User!
 }
 
 type AuthPayload {
@@ -19,4 +27,5 @@ type User {
   email: String!
   name: String!
   tweets: [Tweet!]!
+  followers: [User!]!
 }

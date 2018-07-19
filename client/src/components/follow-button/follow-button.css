@@ -1,0 +1,10 @@
+.follow {
+  width: 90px;
+  font-family: Lato;
+  border-radius: 20px;
+  font-size: 15px;
+  padding: 5px;
+  margin-left: 15px;
+  border: 1px solid #9beaff;
+  box-shadow: 0px 0px 1px 1px #ececec;
+}

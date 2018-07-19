@@ -1,5 +1,5 @@
-# source: http://localhost:4466
-# timestamp: Thu Jul 05 2018 22:09:19 GMT+0100 (Western European Summer Time)
+# source: https://eu1.prisma.sh/bealitonjua9-c63238/twatter/dev
+# timestamp: Fri Jul 13 2018 01:44:45 GMT+0100 (BST)
 
 type AggregateTweet {
   count: Int!
@@ -358,6 +358,7 @@ type User implements Node {
   name: String!
   picture: String
   tweets(where: TweetWhereInput, orderBy: TweetOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tweet!]
+  followers(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
 }
 
 """A connection to a list of items."""
@@ -376,6 +377,12 @@ input UserCreateInput {
   name: String!
   picture: String
   tweets: TweetCreateManyWithoutAuthorInput
+  followers: UserCreateManyInput
+}
+
+input UserCreateManyInput {
+  create: [UserCreateInput!]
+  connect: [UserWhereUniqueInput!]
 }
 
 input UserCreateOneWithoutTweetsInput {
@@ -388,6 +395,7 @@ input UserCreateWithoutTweetsInput {
   password: String!
   name: String!
   picture: String
+  followers: UserCreateManyInput
 }
 
 """An edge in a connection."""
@@ -463,12 +471,31 @@ input UserSubscriptionWhereInput {
   node: UserWhereInput
 }
 
+input UserUpdateDataInput {
+  email: String
+  password: String
+  name: String
+  picture: String
+  tweets: TweetUpdateManyWithoutAuthorInput
+  followers: UserUpdateManyInput
+}
+
 input UserUpdateInput {
   email: String
   password: String
   name: String
   picture: String
   tweets: TweetUpdateManyWithoutAuthorInput
+  followers: UserUpdateManyInput
+}
+
+input UserUpdateManyInput {
+  create: [UserCreateInput!]
+  connect: [UserWhereUniqueInput!]
+  disconnect: [UserWhereUniqueInput!]
+  delete: [UserWhereUniqueInput!]
+  update: [UserUpdateWithWhereUniqueNestedInput!]
+  upsert: [UserUpsertWithWhereUniqueNestedInput!]
 }
 
 input UserUpdateOneWithoutTweetsInput {
@@ -484,11 +511,23 @@ input UserUpdateWithoutTweetsDataInput {
   password: String
   name: String
   picture: String
+  followers: UserUpdateManyInput
+}
+
+input UserUpdateWithWhereUniqueNestedInput {
+  where: UserWhereUniqueInput!
+  data: UserUpdateDataInput!
 }
 
 input UserUpsertWithoutTweetsInput {
   update: UserUpdateWithoutTweetsDataInput!
   create: UserCreateWithoutTweetsInput!
+}
+
+input UserUpsertWithWhereUniqueNestedInput {
+  where: UserWhereUniqueInput!
+  update: UserUpdateDataInput!
+  create: UserCreateInput!
 }
 
 input UserWhereInput {
@@ -703,6 +742,12 @@ input UserWhereInput {
   tweets_every: TweetWhereInput
   tweets_some: TweetWhereInput
   tweets_none: TweetWhereInput
+  followers_every: UserWhereInput
+  followers_some: UserWhereInput
+  followers_none: UserWhereInput
+  _MagicalBackRelation_UserToUser_every: UserWhereInput
+  _MagicalBackRelation_UserToUser_some: UserWhereInput
+  _MagicalBackRelation_UserToUser_none: UserWhereInput
 }
 
 input UserWhereUniqueInput {

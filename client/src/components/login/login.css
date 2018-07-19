@@ -1,0 +1,46 @@
+.input-container {
+  margin-top: 180px;
+  margin-left: -200px;
+}
+
+input {
+  border: none;
+  padding: 5px;
+  width: 335px;
+  text-align: left;
+  font-family: Lato;
+  font-size: 1em;
+  border-bottom: 1px solid #ececec;
+  outline: none;
+}
+
+.not-an-account {
+  margin-top: 180px;
+  margin-left: -200px;
+  font-family: Lato;
+  text-align: left;
+  font-size: 1em;
+  text-align: center;
+}
+
+.not-an-account a {
+  text-decoration: none;
+  color: black;
+  font-weight: bold;
+}
+
+.login-button {
+  margin-top: 30px;
+  margin-left: 50px;
+}
+button {
+  width: 80px;
+  font-family: Lato;
+  border-radius: 20px;
+  padding: 5px;
+  border: 1px solid #9beaff;
+  box-shadow: 0px 0px 1px 1px #ececec;
+}
+button:focus {
+  outline: 0;
+}
